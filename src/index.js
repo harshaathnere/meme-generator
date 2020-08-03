@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {createStore,applyMiddleware} from 'redux';
+import {Provider } from 'react-redux'
+import rootReducer from './reducer/index'
+import thunk from 'redux-thunk'
+import {fectchMemes} from './actions/index';
+
+
+
+const store = createStore(rootReducer,applyMiddleware(thunk))
+store.subscribe(()=>console.log('store', store.getState()))
+store.dispatch(fectchMemes())
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 
